@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-
+const cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
+    'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
 
 /*
  * Display the cards on the page
@@ -9,6 +10,36 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+const refreshButton = document.getElementsByClassName('restart');
+const deck = document.getElementsByClassName('deck');
+
+function createShuffleCards(parentElement) {
+    const array = shuffle(cards.concat(cards));
+
+    const existingCards = parentElement.querySelectorAll('li');
+    if(existingCards.length > 0) {
+        for(index=0; index< existingCards.length; index++) {
+            (parentElement.querySelector('li')).remove();
+        }
+    }
+
+    array.forEach(element => {
+        const li = document.createElement('li');
+        li.className = 'card';
+
+        const i = document.createElement('i');       
+        i.className = 'fa ' + element;
+        li.appendChild(i);
+        parentElement.appendChild(li);
+    });
+}
+
+refreshButton[0].addEventListener('click', function(){
+    console.log('refresh button was clicked');
+    createShuffleCards(deck[0]);
+});
+
+createShuffleCards(deck[0]);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
