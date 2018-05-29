@@ -6,7 +6,11 @@ const cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
 ];
 
 let openedCards = [];
-
+const cardOpenShowClass = 'card open show';
+const matchedCardsClass = 'card match';
+const matchingCardsClass = 'card show matching';
+const diffCardsClass = 'card show diff';
+const cardClass = 'card';
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -63,6 +67,7 @@ function shuffle(array) {
     return array;
 }
 
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -79,15 +84,44 @@ deck.addEventListener('click', function (event) {
         console.log('card clicked');
         console.log('openedCards: ' + openedCards);
 
-        if (event.target.className === 'card' && openedCards.length < 2) {
-            event.target.className = 'card open show';
-            
+        if (event.target.className === cardClass && openedCards.length < 2) {
+            event.target.className = cardOpenShowClass;
             const cardSymbol = event.target.firstChild.className;
             openedCards.push(cardSymbol);
-
             console.log('openedCards: ' + openedCards);
-        } else if (openedCards.length == 2) {
-            //TODO: verify selected cards
+
+            if(openedCards.length === 2) {
+                checkCardsAreTheSame(openedCards);
+            }
         }
     }
 });
+
+function checkCardsAreTheSame(cardsArray) {
+    if(cardsArray.length !== 2) {
+        return;
+    }
+    
+    let openedCardsElement = deck.getElementsByClassName(cardOpenShowClass);
+    const card1 = openedCardsElement[0];
+    const card2 = openedCardsElement[1];
+
+    if(cardsArray[0] === cardsArray[1]) {
+        card1.className = matchingCardsClass;
+        card2.className = matchingCardsClass;
+        setTimeout(function() {
+            card1.className = matchedCardsClass;
+            card2.className = matchedCardsClass;
+
+        }, 500);
+    } else {
+        card1.className = diffCardsClass;
+        card2.className = diffCardsClass;
+        setTimeout(function() {
+            card1.className = cardClass;
+            card2.className = cardClass;
+
+        }, 700);
+    }
+    openedCards = [];
+}
