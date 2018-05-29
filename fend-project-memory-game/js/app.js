@@ -6,11 +6,14 @@ const cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
 ];
 
 let openedCards = [];
+let movesCounter = 0;
+
 const cardOpenShowClass = 'card open show';
 const matchedCardsClass = 'card match';
 const matchingCardsClass = 'card show matching';
 const diffCardsClass = 'card show diff';
 const cardClass = 'card';
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -41,15 +44,18 @@ function createShuffleCards(parentElement) {
         li.appendChild(i);
         parentElement.appendChild(li);
     });
-    openedCards = [];
 }
 
 refreshButton[0].addEventListener('click', function () {
     console.log('refresh button was clicked');
     createShuffleCards(deck);
+    openedCards = [];
+    movesCounter = 0;
+    updateMovesElementValue(movesCounter);
 });
 
 createShuffleCards(deck);
+updateMovesElementValue(movesCounter);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -92,6 +98,7 @@ deck.addEventListener('click', function (event) {
 
             if(openedCards.length === 2) {
                 checkCardsAreTheSame(openedCards);
+                incrementMovesCounter();
             }
         }
     }
@@ -124,4 +131,15 @@ function checkCardsAreTheSame(cardsArray) {
         }, 700);
     }
     openedCards = [];
+}
+
+function incrementMovesCounter() {
+    movesCounter++;
+    console.log('movesCounter:' + movesCounter);
+    updateMovesElementValue(movesCounter);
+}
+
+function updateMovesElementValue(value){
+    const movesElements = document.getElementsByClassName('moves');
+    movesElements[0].innerHTML = value;
 }
