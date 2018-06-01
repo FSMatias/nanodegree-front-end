@@ -5,8 +5,9 @@ const cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
     'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'
 ];
 
-let openedCards = [];
-let movesCounter = 0;
+let openedCards;
+let movesCounter;
+let numberOfCardPairsMatched;
 
 const cardOpenShowClass = 'card open show';
 const matchedCardsClass = 'card match';
@@ -48,14 +49,18 @@ function createShuffleCards(parentElement) {
 
 refreshButton[0].addEventListener('click', function () {
     console.log('refresh button was clicked');
+    restartGame();
+});
+
+function restartGame() {
     createShuffleCards(deck);
     openedCards = [];
     movesCounter = 0;
+    numberOfCardPairsMatched = 0;
     updateMovesElementValue(movesCounter);
-});
+}
 
-createShuffleCards(deck);
-updateMovesElementValue(movesCounter);
+restartGame();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -87,44 +92,41 @@ function shuffle(array) {
 
 deck.addEventListener('click', function (event) {
     if (event.target.nodeName === 'LI') {
-        console.log('card clicked');
-        console.log('openedCards: ' + openedCards);
-
         if (event.target.className === cardClass && openedCards.length < 2) {
             event.target.className = cardOpenShowClass;
             const cardSymbol = event.target.firstChild.className;
             openedCards.push(cardSymbol);
-            console.log('openedCards: ' + openedCards);
-
-            if(openedCards.length === 2) {
-                checkCardsAreTheSame(openedCards);
+            if (openedCards.length === 2) {
                 incrementMovesCounter();
+                checkCardsAreTheSame(openedCards);
             }
         }
     }
 });
 
 function checkCardsAreTheSame(cardsArray) {
-    if(cardsArray.length !== 2) {
+    if (cardsArray.length !== 2) {
         return;
     }
-    
+
     let openedCardsElement = deck.getElementsByClassName(cardOpenShowClass);
     const card1 = openedCardsElement[0];
     const card2 = openedCardsElement[1];
 
-    if(cardsArray[0] === cardsArray[1]) {
+    if (cardsArray[0] === cardsArray[1]) {
         card1.className = matchingCardsClass;
         card2.className = matchingCardsClass;
-        setTimeout(function() {
+        setTimeout(function () {
             card1.className = matchedCardsClass;
             card2.className = matchedCardsClass;
 
         }, 500);
+        numberOfCardPairsMatched++;
+        checkAllCardsHaveMatched();
     } else {
         card1.className = diffCardsClass;
         card2.className = diffCardsClass;
-        setTimeout(function() {
+        setTimeout(function () {
             card1.className = cardClass;
             card2.className = cardClass;
 
@@ -135,11 +137,27 @@ function checkCardsAreTheSame(cardsArray) {
 
 function incrementMovesCounter() {
     movesCounter++;
-    console.log('movesCounter:' + movesCounter);
     updateMovesElementValue(movesCounter);
 }
 
-function updateMovesElementValue(value){
+function updateMovesElementValue(value) {
     const movesElements = document.getElementsByClassName('moves');
     movesElements[0].innerHTML = value;
 }
+
+const modalDiv = document.getElementsByClassName('modal');
+
+function checkAllCardsHaveMatched() {
+    if (numberOfCardPairsMatched === cards.length) {
+        const modelContentP = document.getElementById("model-content-p");
+        modelContentP.textContent = "With " + movesCounter + " Moves and xx Stars."
+        modalDiv[0].style.display = "block";
+    }
+}
+
+const newGameButton = document.getElementById('newGameButton');
+
+newGameButton.addEventListener('click', function () {
+    restartGame();
+    modalDiv[0].style.display = "none";
+});
