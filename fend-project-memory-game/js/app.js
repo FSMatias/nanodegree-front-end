@@ -17,6 +17,7 @@ const diffCardsClass = 'card show diff';
 const cardClass = 'card';
 const regularStarClass = 'far fa-star';
 const boldStarClass = 'fa fa-star';
+const redoClass = 'fa fa-redo';
 
 /*
  * Display the cards on the page
@@ -52,11 +53,10 @@ function createShuffleCards(parentElement) {
 }
 
 refreshButton[0].addEventListener('click', function () {
-    console.log('refresh button was clicked');
     const restartIcon = document.getElementById('restart-icon');
-    restartIcon.className = "fa fa-redo restart-animated";
-    setTimeout(function(){
-        restartIcon.className = "fa fa-redo";
+    restartIcon.className = redoClass + " restart-animated";
+    setTimeout(function () {
+        restartIcon.className = redoClass;
     }, 500);
     restartGame();
 });
@@ -153,17 +153,13 @@ function incrementMovesCounter() {
 
 function updateStarRating() {
     switch (movesCounter) {
-        case 5:
+        case 7:
             starsList[2].className = regularStarClass;
             starRate = 2;
             break;
-        case 10:
+        case 14:
             starsList[1].className = regularStarClass;
             starRate = 1;
-            break;
-        case 15:
-            starsList[0].className = regularStarClass;
-            starRate = 0;
             break;
     }
 }
@@ -171,7 +167,6 @@ function updateStarRating() {
 function resetStarRating() {
     starsList[2].className = boldStarClass;
     starsList[1].className = boldStarClass;
-    starsList[0].className = boldStarClass;
     starRate = 3;
 }
 
