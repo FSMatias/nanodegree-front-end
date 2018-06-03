@@ -31,26 +31,16 @@ const deck = document.getElementById('cards-deck');
 const starsList = document.getElementsByClassName('fa-star');
 const timerValue = document.getElementById('timer-value');
 
-//TODO: improve performance!
 function createShuffleCards(parentElement) {
     const array = shuffle(cards.concat(cards));
-    console.log('new array:' + array);
 
     const existingCards = parentElement.querySelectorAll('li');
-    if (existingCards.length > 0) {
-        for (index = 0; index < existingCards.length; index++) {
-            (parentElement.querySelector('li')).remove();
-        }
-    }
 
-    array.forEach(element => {
-        const li = document.createElement('li');
-        li.className = 'card';
-
-        const i = document.createElement('i');
-        i.className = 'fa ' + element;
-        li.appendChild(i);
-        parentElement.appendChild(li);
+    let index = 0;
+    existingCards.forEach(element => {
+        element.className = cardClass;
+        element.querySelector('i').className = 'fa ' + array[index];
+        index++;
     });
 }
 
@@ -73,8 +63,6 @@ function restartGame() {
     gameTimer = 0;
     updateTimerValue();
 }
-
-restartGame();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -108,7 +96,7 @@ deck.addEventListener('click', function (event) {
     if (event.target.nodeName === 'LI') {
         if (event.target.className === cardClass && openedCards.length < 2) {
             event.target.className = cardOpenShowClass;
-            const cardSymbol = event.target.firstChild.className;
+            const cardSymbol = event.target.querySelector('i').className;
             openedCards.push(cardSymbol);
             if (openedCards.length === 2) {
                 incrementMovesCounter();
@@ -207,10 +195,12 @@ newGameButton.addEventListener('click', function () {
 });
 
 /* 
-  -- Timer -- 
-  Update timer every second
-*/
+ * -- Timer -- 
+ * Update timer every second
+ */
 setInterval(function timer() {
     gameTimer++;
     updateTimerValue();
 }, 1000);
+
+restartGame();
