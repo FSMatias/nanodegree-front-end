@@ -1,19 +1,22 @@
 /*
  * Create a list that holds all of your cards
  */
-const cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
+const cards = ['fa-sun', 'fa-paper-plane', 'fa-anchor', 'fa-bolt',
     'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'
 ];
 
 let openedCards;
 let movesCounter;
 let numberOfCardPairsMatched;
+let starRate;
 
 const cardOpenShowClass = 'card open show';
 const matchedCardsClass = 'card match';
 const matchingCardsClass = 'card show matching';
 const diffCardsClass = 'card show diff';
 const cardClass = 'card';
+const regularStarClass = 'far fa-star';
+const boldStarClass = 'fa fa-star';
 
 /*
  * Display the cards on the page
@@ -23,6 +26,7 @@ const cardClass = 'card';
  */
 const refreshButton = document.getElementsByClassName('restart');
 const deck = document.getElementById('cards-deck');
+const starsList = document.getElementsByClassName('fa-star');
 
 //TODO: improve performance!
 function createShuffleCards(parentElement) {
@@ -49,6 +53,11 @@ function createShuffleCards(parentElement) {
 
 refreshButton[0].addEventListener('click', function () {
     console.log('refresh button was clicked');
+    const restartIcon = document.getElementById('restart-icon');
+    restartIcon.className = "fa fa-redo restart-animated";
+    setTimeout(function(){
+        restartIcon.className = "fa fa-redo";
+    }, 500);
     restartGame();
 });
 
@@ -57,6 +66,7 @@ function restartGame() {
     openedCards = [];
     movesCounter = 0;
     numberOfCardPairsMatched = 0;
+    resetStarRating();
     updateMovesElementValue(movesCounter);
 }
 
@@ -98,6 +108,7 @@ deck.addEventListener('click', function (event) {
             openedCards.push(cardSymbol);
             if (openedCards.length === 2) {
                 incrementMovesCounter();
+                updateStarRating();
                 checkCardsAreTheSame(openedCards);
             }
         }
@@ -140,6 +151,30 @@ function incrementMovesCounter() {
     updateMovesElementValue(movesCounter);
 }
 
+function updateStarRating() {
+    switch (movesCounter) {
+        case 5:
+            starsList[2].className = regularStarClass;
+            starRate = 2;
+            break;
+        case 10:
+            starsList[1].className = regularStarClass;
+            starRate = 1;
+            break;
+        case 15:
+            starsList[0].className = regularStarClass;
+            starRate = 0;
+            break;
+    }
+}
+
+function resetStarRating() {
+    starsList[2].className = boldStarClass;
+    starsList[1].className = boldStarClass;
+    starsList[0].className = boldStarClass;
+    starRate = 3;
+}
+
 function updateMovesElementValue(value) {
     const movesElements = document.getElementsByClassName('moves');
     movesElements[0].innerHTML = value;
@@ -150,7 +185,7 @@ const modalDiv = document.getElementsByClassName('modal');
 function checkAllCardsHaveMatched() {
     if (numberOfCardPairsMatched === cards.length) {
         const modelContentP = document.getElementById("model-content-p");
-        modelContentP.textContent = "With " + movesCounter + " Moves and xx Stars."
+        modelContentP.textContent = "With " + movesCounter + " Moves and " + starRate + " Stars."
         modalDiv[0].style.display = "block";
     }
 }

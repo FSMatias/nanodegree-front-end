@@ -151,6 +151,10 @@ button {
     text-align: center;
 }
 
+.restart-animated { 
+    animation: rotate360 0.5s;
+}
+
 @keyframes shake {
     0% {
         transform: rotate(4deg);
@@ -206,4 +210,10 @@ button {
     100% {
         transform: scale(0.8, 0.8);
     }
+}
+
+@keyframes rotate360 {
+  100% {
+    transform: rotate(360deg);
+  }
 }
