@@ -129,6 +129,13 @@ button {
     display: inline-block;
 }
 
+.score-panel .timer {
+    margin: 0;
+    padding-left: 2em;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;
@@ -151,7 +158,7 @@ button {
     text-align: center;
 }
 
-.restart-animated { 
+.restart-animated {
     animation: rotate360 0.5s;
 }
 
@@ -213,7 +220,7 @@ button {
 }
 
 @keyframes rotate360 {
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }

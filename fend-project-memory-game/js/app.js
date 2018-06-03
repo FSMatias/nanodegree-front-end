@@ -9,6 +9,7 @@ let openedCards;
 let movesCounter;
 let numberOfCardPairsMatched;
 let starRate;
+let gameTimer;
 
 const cardOpenShowClass = 'card open show';
 const matchedCardsClass = 'card match';
@@ -28,6 +29,7 @@ const redoClass = 'fa fa-redo';
 const refreshButton = document.getElementsByClassName('restart');
 const deck = document.getElementById('cards-deck');
 const starsList = document.getElementsByClassName('fa-star');
+const timerValue = document.getElementById('timer-value');
 
 //TODO: improve performance!
 function createShuffleCards(parentElement) {
@@ -68,6 +70,8 @@ function restartGame() {
     numberOfCardPairsMatched = 0;
     resetStarRating();
     updateMovesElementValue(movesCounter);
+    gameTimer = 0;
+    updateTimerValue();
 }
 
 restartGame();
@@ -175,12 +179,22 @@ function updateMovesElementValue(value) {
     movesElements[0].innerHTML = value;
 }
 
+function updateTimerValue() {
+    timerValue.innerHTML = calculateTimerValueInMinAndSec();
+}
+
+function calculateTimerValueInMinAndSec() {
+    var minutes = Math.floor(gameTimer / 60);
+    var seconds = gameTimer % 60;
+    return minutes + "min " + seconds + "s"
+}
+
 const modalDiv = document.getElementsByClassName('modal');
 
 function checkAllCardsHaveMatched() {
     if (numberOfCardPairsMatched === cards.length) {
         const modelContentP = document.getElementById("model-content-p");
-        modelContentP.textContent = "With " + movesCounter + " Moves and " + starRate + " Stars."
+        modelContentP.textContent = "With " + movesCounter + " Moves and " + starRate + " Stars. You finished the game in " + calculateTimerValueInMinAndSec(gameTimer);
         modalDiv[0].style.display = "block";
     }
 }
@@ -191,3 +205,12 @@ newGameButton.addEventListener('click', function () {
     restartGame();
     modalDiv[0].style.display = "none";
 });
+
+/* 
+  -- Timer -- 
+  Update timer every second
+*/
+setInterval(function timer() {
+    gameTimer++;
+    updateTimerValue();
+}, 1000);
