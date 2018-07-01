@@ -10,6 +10,8 @@ let movesCounter;
 let numberOfCardPairsMatched;
 let starRate;
 let gameTimer;
+let timer;
+let firstCardClicked;
 
 const cardOpenShowClass = 'card open show';
 const matchedCardsClass = 'card match';
@@ -29,12 +31,30 @@ function createShuffleCards(parentElement) {
     const array = shuffle(cards.concat(cards));
 
     const existingCards = parentElement.querySelectorAll('li');
+    if (existingCards.length > 0) {
+        let index = 0;
+        existingCards.forEach(element => {
+            element.className = cardClass;
+            element.querySelector('i').className = 'fa ' + array[index];
+            index++;
+        });
+    } else {
+        createCards(array, parentElement);
+    }
+}
 
-    let index = 0;
-    existingCards.forEach(element => {
-        element.className = cardClass;
-        element.querySelector('i').className = 'fa ' + array[index];
-        index++;
+/*
+ *  Create shuffled cards on board with 'closed' state
+ */
+function createCards(array, parentElement) {
+    array.forEach(element => {
+        const li = document.createElement('li');
+        li.className = 'card';
+
+        const i = document.createElement('i');
+        i.className = 'fa ' + element;
+        li.appendChild(i);
+        parentElement.appendChild(li);
     });
 }
 
@@ -44,10 +64,17 @@ refreshButton[0].addEventListener('click', function () {
     setTimeout(function () {
         restartIcon.className = redoClass;
     }, 500);
+    stopTimer();
     restartGame();
 });
 
+/*
+ *  At the moment the game restarts,
+ *      1. The cards should be shufled and display in the 'closed' state
+ *      2. The moves counter, the star rating, the number of cards matched and the timer should be reset
+ */
 function restartGame() {
+    firstCardClicked = false;
     createShuffleCards(deck);
     openedCards = [];
     movesCounter = 0;
@@ -74,7 +101,18 @@ function shuffle(array) {
     return array;
 }
 
+/*
+ *  When a user clicks a card, the card should display to the user.
+ *  If there is already another card opened:
+ *      1. The number of moves should increase by one
+ *      2. the updateStarRating function should be called to verify/update the star rating
+ *      3. The checkCardsAreTheSame function should be called to check if both opened cards match
+ */
 deck.addEventListener('click', function (event) {
+    if (!firstCardClicked) {
+        startTimer();
+        firstCardClicked = true;
+    }
     if (event.target.nodeName === 'LI') {
         if (event.target.className === cardClass && openedCards.length < 2) {
             event.target.className = cardOpenShowClass;
@@ -89,6 +127,14 @@ deck.addEventListener('click', function (event) {
     }
 });
 
+/*
+ *  checkCardsAreTheSame function 
+ *    If cards are the same, the following task should be completed:
+ *      1. The cards that match whould keep opened      
+ *      2. numberOfCardPairsMatched variable should increase by one
+ *      3. it should check if all cards have already being matched
+ *    If cards don't match, the cards should move back to 'closed' state
+ */
 function checkCardsAreTheSame(cardsArray) {
     if (cardsArray.length !== 2) {
         return;
@@ -161,8 +207,13 @@ function calculateTimerValueInMinAndSec() {
 
 const modalDiv = document.getElementsByClassName('modal');
 
+/*
+ *  When all cards have matched, timer should stop and a model should be displayed with a Congrats message
+ *  informing the user his star rating, moves count and timer value 
+ */
 function checkAllCardsHaveMatched() {
     if (numberOfCardPairsMatched === cards.length) {
+        stopTimer();
         const modelContentP = document.getElementById("model-content-p");
         modelContentP.textContent = "With " + movesCounter + " Moves and " + starRate + " Stars. You finished the game in " + calculateTimerValueInMinAndSec(gameTimer);
         modalDiv[0].style.display = "block";
@@ -180,9 +231,17 @@ newGameButton.addEventListener('click', function () {
  * -- Timer -- 
  * Update timer every second
  */
-setInterval(function timer() {
-    gameTimer++;
-    updateTimerValue();
-}, 1000);
+function startTimer() {
+    timer = setInterval(function timer() {
+        gameTimer++;
+        updateTimerValue();
+    }, 1000);
+}
+
+function stopTimer() {
+    if (timer != undefined) {
+        clearInterval(timer);
+    }
+}
 
 restartGame();
