@@ -38,18 +38,48 @@ class Enemy extends Character {
 // Player class: This class requires an update(), render() and a handleInput() method.
 // Player is also a subclass of Character
 class Player extends Character {
-    constructor(x = 202, y = getYPosition(5), sprite = 'images/char-boy.png') {
+    constructor(x = getXPosition(2), y = getYPosition(5), sprite = 'images/char-boy.png') {
         super(x, y, sprite);
+
+        // Block where player starts:
+        this.canvasColumnNumber = 2;
+        this.canvasRowNumber = 5;
     }
 
     update(dt) {
-        //TODO
+        this.x = getXPosition(this.canvasColumnNumber);
+        this.y = getYPosition(this.canvasRowNumber);
     }
 
-    handleInput() {
-        //TODO
+    handleInput(keycode) {
+        switch (keycode) {
+            case 'left':
+                if (this.canvasColumnNumber > 0) {
+                    this.canvasColumnNumber = this.canvasColumnNumber - 1;
+                }
+                break;
+            case 'up':
+                if (this.canvasRowNumber > 0) {
+                    this.canvasRowNumber = this.canvasRowNumber - 1;
+                }
+                break;
+            case 'right':
+                if (this.canvasColumnNumber < maxNumberOfCanvasCopumns) {
+                    this.canvasColumnNumber = this.canvasColumnNumber + 1;
+                }
+                break;
+            case 'down':
+                if (this.canvasRowNumber < maxNumberOfCanvasRows) {
+                    this.canvasRowNumber = this.canvasRowNumber + 1;
+                }
+                break;
+        }
     }
 }
+
+// Max number of rows and columns on canvas (starting from 0)
+const maxNumberOfCanvasRows = 5;
+const maxNumberOfCanvasCopumns = 4;
 
 
 // Now instantiate your objects.
@@ -101,4 +131,13 @@ function getYPosition(rowNumber) {
     const yValueForFirstRow = -25;
     const deltaY = 85;
     return yValueForFirstRow + (rowNumber * deltaY);
+}
+
+// Function to calculate x position based on the column number
+//  X Position is represented by:
+//  x = xValueOfFirstRow + (columnNumber*deltaX), where columnNumber starts at 0
+function getXPosition(columnNumber) {
+    const xValueOfFirstRow = 0;
+    const deltaX = 101;
+    return x = xValueOfFirstRow + (columnNumber * deltaX);
 }
