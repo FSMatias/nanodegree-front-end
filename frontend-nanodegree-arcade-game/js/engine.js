@@ -26,7 +26,8 @@ var Engine = (function (global) {
 
     canvas.width = 505;
     canvas.height = 606;
-    doc.body.appendChild(canvas);
+    const canvasDiv = document.getElementById('canvas-div');
+    canvasDiv.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -185,7 +186,12 @@ var Engine = (function (global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        // player's avatar options:
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png'
     ]);
     Resources.onReady(init);
 
@@ -199,8 +205,10 @@ var Engine = (function (global) {
      * If yes, display modal window and reset player position
      */
     const modalDiv = document.getElementsByClassName('modal');
+    const playerAvatarImg = document.getElementById('player-avatar');
     function checkIfPlayerWon() {
         if (player.canvasRowNumber === 0) {
+            playerAvatarImg.src = player.sprite;
             modalDiv[0].style.display = "block";
             player.resetPosition();
         }
@@ -211,4 +219,15 @@ var Engine = (function (global) {
         modalDiv[0].style.display = "none";
         init();
     });
+
+    /* Choose the player option
+     * This option allow the user to choose a different avatar
+     */
+    const listOfPlayers = document.getElementsByClassName('list of players');
+    listOfPlayers[0].addEventListener('click', function (event) {
+        console.log(event.target.id);
+        if (event.target.id !== undefined & event.target.id !== "") {
+            player.updateCharacter(event.target.id);
+        }
+    })
 })(this);

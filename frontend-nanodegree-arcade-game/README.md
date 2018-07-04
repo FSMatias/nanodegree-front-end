@@ -6,9 +6,15 @@ Students should use this [rubric](https://review.udacity.com/#!/projects/2696458
 For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
 
 
-## Instructions how to play
+## Instructions on how to play
 
-Your goal is to have the player move from the grass to the water without being hit by any bug.
-If player gets hit by a bug, the game restart putting the player in the initial position
-To move player around, use the arrows keys on the keyboard.
+* Your goal is to move the player from the grass to the water without being hit by any bug.
+* If player gets hit by a bug, the game restart putting the player on the initial position.
+* To move player around, use the arrows keys on the keyboard.
+* You can choose a different avatar to represent your player by clicking on the different avatar options.
 
+
+## Pre-requisites and Instalation
+
+This code is composed by html, css and javascript and there is no installation pre-requisite required.
+To see the page running, just open the html file on the browser.

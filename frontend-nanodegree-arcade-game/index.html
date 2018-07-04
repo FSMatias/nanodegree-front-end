@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Effective JavaScript: Frogger</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="modal">
         <div class="modal-content">
@@ -14,9 +16,30 @@
             <button id="newGameButton"> Play again! </button>
         </div>
     </div>
-    
+
+    <div id="canvas-div"></div>
+
+    <div class="choose-player">
+        <h1 id="choose-player-h1">Choose your player:</h1>
+        <div class='list of players'>
+            <div class='inline-block-child'>
+                <img id="char-boy" src="images/char-boy.png" alt="Player avatar: boy">
+            </div>
+            <div class='inline-block-child'>
+                <img id="char-cat-girl" src="images/char-cat-girl.png" alt="Player avatar: cat girl">
+            </div>
+            <div class='inline-block-child'>
+                <img id="char-horn-girl" src="images/char-horn-girl.png" alt="Player avatar: horn girl">
+            </div>
+            <div class='inline-block-child'>
+                <img id="char-princess-girl" src="images/char-princess-girl.png" alt="Player avatar: princess girl">
+            </div>
+        </div>
+    </div>
+
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
 </body>
+
 </html>

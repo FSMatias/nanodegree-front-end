@@ -33,7 +33,7 @@ class Enemy extends Character {
             this.velocity = getRandomEnemyVelocity();
         }
     }
-    
+
     getColumnNumber() {
         return Math.round(this.x / 101);
     }
@@ -85,6 +85,11 @@ class Player extends Character {
                 }
                 break;
         }
+    }
+
+    // Update character image/avatar
+    updateCharacter(character) {
+        this.sprite = "images/" + character + ".png";
     }
 }
 
@@ -140,7 +145,7 @@ function getRandomEnemyVelocity() {
 //  y = yValueOfFirstRow + (rowNumber*deltaY), where rowNumber starts at 0
 function getYPosition(rowNumber) {
     const yValueForFirstRow = -25;
-    const deltaY = 85;
+    const deltaY = 83;
     return yValueForFirstRow + (rowNumber * deltaY);
 }
 
