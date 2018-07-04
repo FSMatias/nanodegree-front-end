@@ -1,3 +1,34 @@
 body {
     text-align: center;
 }
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.modal-content {
+    padding-top: 15%;
+    text-align: center;
+}
+
+#player-avatar {
+    transform: translateY(0);
+    animation: MoveUpDown 1s linear infinite;
+}
+
+@keyframes MoveUpDown {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+  }

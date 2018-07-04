@@ -46,6 +46,7 @@ var Engine = (function (global) {
          */
         update(dt);
         render();
+        checkIfPlayerWon();
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -193,4 +194,21 @@ var Engine = (function (global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+
+    /* Check if player won the game
+     * If yes, display modal window and reset player position
+     */
+    const modalDiv = document.getElementsByClassName('modal');
+    function checkIfPlayerWon() {
+        if (player.canvasRowNumber === 0) {
+            modalDiv[0].style.display = "block";
+            player.resetPosition();
+        }
+    }
+
+    const newGameButton = document.getElementById('newGameButton');
+    newGameButton.addEventListener('click', function () {
+        modalDiv[0].style.display = "none";
+        init();
+    });
 })(this);
