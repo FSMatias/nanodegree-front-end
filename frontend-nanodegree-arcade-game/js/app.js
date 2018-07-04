@@ -33,6 +33,10 @@ class Enemy extends Character {
             this.velocity = getRandomEnemyVelocity();
         }
     }
+    
+    getColumnNumber() {
+        return Math.round(this.x / 101);
+    }
 }
 
 // Player class: This class requires an update(), render() and a handleInput() method.
@@ -42,6 +46,13 @@ class Player extends Character {
         super(x, y, sprite);
 
         // Block where player starts:
+        this.canvasColumnNumber = 2;
+        this.canvasRowNumber = 5;
+    }
+
+    resetPosition() {
+        this.x = getXPosition(2);
+        this.y = getYPosition(5);
         this.canvasColumnNumber = 2;
         this.canvasRowNumber = 5;
     }
