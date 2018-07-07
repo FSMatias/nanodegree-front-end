@@ -102,7 +102,7 @@ var Engine = (function (global) {
         allEnemies.forEach(function (enemy) {
             const x = enemy.x;
             if (enemy.y === player.y) {
-                if (enemy.getColumnNumber() === player.canvasColumnNumber) {
+                if(enemy.x >= player.x - 75 && enemy.x <= player.x + 75){
                     player.resetPosition();
                 }
             }

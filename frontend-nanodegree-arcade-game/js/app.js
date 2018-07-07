@@ -33,10 +33,6 @@ class Enemy extends Character {
             this.velocity = getRandomEnemyVelocity();
         }
     }
-
-    getColumnNumber() {
-        return Math.round(this.x / 101);
-    }
 }
 
 // Player class: This class requires an update(), render() and a handleInput() method.
