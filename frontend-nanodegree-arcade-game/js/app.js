@@ -1,3 +1,5 @@
+'use strict';
+
 class Character {
     constructor(x, y, sprite) {
         this.x = x;
@@ -33,6 +35,16 @@ class Enemy extends Character {
             this.velocity = getRandomEnemyVelocity();
         }
     }
+
+    // Check if enemy collided with another character
+    checkCollisions(char) {
+        if (this.y === char.y) {
+            if (this.x >= char.x - 75 && this.x <= char.x + 75) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 // Player class: This class requires an update(), render() and a handleInput() method.
@@ -40,15 +52,17 @@ class Enemy extends Character {
 class Player extends Character {
     constructor(x = getXPosition(2), y = getYPosition(5), sprite = 'images/char-boy.png') {
         super(x, y, sprite);
-
-        // Block where player starts:
-        this.canvasColumnNumber = 2;
-        this.canvasRowNumber = 5;
+        this.setInitialCanvasPosition();
     }
 
     resetPosition() {
         this.x = getXPosition(2);
         this.y = getYPosition(5);
+        this.setInitialCanvasPosition();
+    }
+
+    // Block where player starts:
+    setInitialCanvasPosition() {
         this.canvasColumnNumber = 2;
         this.canvasRowNumber = 5;
     }
@@ -85,7 +99,7 @@ class Player extends Character {
 
     // Update character image/avatar
     updateCharacter(character) {
-        this.sprite = "images/" + character + ".png";
+        this.sprite = 'images/' + character + '.png';
     }
 }
 
@@ -151,5 +165,5 @@ function getYPosition(rowNumber) {
 function getXPosition(columnNumber) {
     const xValueOfFirstRow = 0;
     const deltaX = 101;
-    return x = xValueOfFirstRow + (columnNumber * deltaX);
+    return (xValueOfFirstRow + (columnNumber * deltaX));
 }
