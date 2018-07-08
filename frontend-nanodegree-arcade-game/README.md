@@ -18,3 +18,17 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 This code is composed by html, css and javascript and there is no installation pre-requisite required.
 To see the page running, just open the html file on the browser.
+
+# Gulp
+
+The gulfile.js can be used to improve productivity. In this project, the gulp file is setup to:
+1. Listen for changes made on the CSS, JS and HTML files and reloading the browser automatically in order to allow life editing. 
+
+2. Allowing the use of Sass in order to facilitate the work with CSS files. You can read more about sass here: https://sass-lang.com/
+
+## Gulp installation
+1. Install Gulp: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
+
+2. To run gulpfile.js, use command:
+
+    ``gulp``
