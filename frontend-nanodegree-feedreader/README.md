@@ -46,3 +46,14 @@ Review the Feed Reader Testing [Project Rubric](https://review.udacity.com/#!/pr
 19. Implement error handling for undefined variables and out-of-bound array access.
 20. When complete - all of your tests should pass. 
 21. Write a README file detailing all steps required to successfully run the application. If you have added additional tests (for Udacious Test Coverage),  provide documentation for what these future features are and what the tests are checking for.
+
+
+# How will I complete this project?
+To run the unit test, just open the index.html file on the browser and look at the Jasmine report in the bottom.
+
+The tests has some dependencies:
+1. JQuery
+2. Jasmine
+3. Jasmine-jquery
+
+In order to life editing, run `gulp` command on the terminal. Any changes made on the index.html and on files under jasmine/spec folder will automatically refresh the browser.
