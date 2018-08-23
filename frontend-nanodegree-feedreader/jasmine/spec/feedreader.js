@@ -34,6 +34,7 @@ $(function () {
         it('have URLs defined', function () {
             allFeeds.forEach(function (feed) {
                 expect(feed.url).toBeDefined();
+                expect(feed.url.length).not.toBe(0);
             })
         });
 
@@ -96,44 +97,43 @@ $(function () {
          */
         it('when loadFeed is completed, there is at least one entry element whithin feed container', function (done) {
             expect($('.feed').length).not.toBeLessThan(1);
+            // Get parent-child relationship using JQuery:
+            const entries = $('.feed .entry');
+            expect(entries.length).toBeGreaterThan(0);
+
+            // Get parent-child relationship using JS:
+            // const entriesJS = document.querySelector('.feed').querySelectorAll('.entry');
+            // expect(entriesJS.length).toBeGreaterThan(0);
+
+            done();
+        });
+        
+        it('when loadFeed is completed, every entry-link has an entry element', function (done) {
+            const entryLinks = document.querySelector('.feed').querySelectorAll('.entry-link');
+            entryLinks.forEach(function(entryLink) {
+                expect(entryLink.getElementsByClassName('entry').length).toBeGreaterThan(0);
+            })
             done();
         });
     });
 
     describe('New Feed Selection', function () {
-
-        beforeEach(function (done) {
-            // Load first feed before each test
-            loadFeed(0, function () {
-                done();
-            })
-        });
-
         /* Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
         it('loadFeed updates', function (done) {
-            // Check first feed was loaded 
-            const headerTitle = $('.header-title');
-            expect(headerTitle[0].textContent).toBe('Udacity Blog');
-            // Get first link from first feed
-            const entryLinks = $('.entry-link');
-            const entryLinkBefore = entryLinks[0].href; // First Link from first feed
-            expect($('.feed').length).toBe(1);
-
-            // Loads second feed
-            loadFeed(1, function () {
-                // Check second feed was loaded
+            loadFeed(0, function () {
                 const headerTitle = $('.header-title');
-                expect(headerTitle[0].textContent).toBe('CSS Tricks');
-                // Check first link of second feed is different than the first link on the first feed
-                const entryLinks = $('.entry-link');
-                const entryLinkAfter = entryLinks[0].href; // First Link from second feed
-                expect(entryLinkAfter).not.toBe(entryLinkBefore); // First Link from second feed           
-                expect($('.feed').length).toBe(1);
-                done();
-            })
+                expect(headerTitle[0].textContent).toBe('Udacity Blog');
+                const beforeFeed = document.querySelector('.feed').textContent
+
+                loadFeed(1, function () {
+                    const afterFeed = document.querySelector('.feed').textContent
+                    expect(afterFeed).not.toBe(beforeFeed); 
+                    done();   
+                });
+            });
         });
     });
 }());
