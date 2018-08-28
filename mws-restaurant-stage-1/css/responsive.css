@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media screen and (min-width: 600px) and (max-width: 799px) {
+    #reviewer-name {
+        display: inline-block;
+        width: 40%;
+        padding-right: 0px;
+        margin-right: 0px;
+    }
+    #review-date {
+        float: right;
+        width: 45%;
+        text-align: right;
+        padding-left: 0px;
+        margin-left: 0px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1099px) {
+    #restaurants-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    #restaurants-list li {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    .inside header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .inside #map-container {
+        background: blue none repeat scroll 0 0;
+        height: calc(100% - 136px);
+        position: fixed;
+        right: 0;
+        top: 136px;
+        width: 50%;
+    }
+    .inside #restaurant-container,
+    .inside #reviews-container {
+        width: 45%;
+        margin-left: 0px;
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+    .inside #restaurant-container {
+        margin-top: 136px;
+    }
+    .inside #map {
+        background-color: #ccc;
+        height: 100%;
+        width: 100%;
+    }
+    .inside #footer {
+        z-index: 99;
+        position: absolute;
+        width: 100%;
+    }
+    #reviewer-name {
+        display: inline-block;
+        width: 40%;
+        padding-right: 0px;
+        margin-right: 0px;
+    }
+    #review-date {
+        float: right;
+        width: 45%;
+        text-align: right;
+        padding-left: 0px;
+        margin-left: 0px;
+    }
+    #restaurants-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    #restaurants-list li {
+        width: 27%;
+    }
+}
