@@ -346,7 +346,7 @@ nav h1 a {
   text-align: left;
 }
 
-#review-rating {
+.review-rating {
   display: inline;
   background-color: #f58500;
   padding: 0.5em;
@@ -356,7 +356,7 @@ nav h1 a {
   font-weight: bold;
 }
 
-#review-header {
+.review-header {
   background-color: #333;
   padding-bottom: 0.5em;
   padding-top: 0.5em;
@@ -365,13 +365,13 @@ nav h1 a {
   clear: both;
 }
 
-#reviewer-name {
+.reviewer-name {
   margin-bottom: 0px;
   padding-left: 1em;
   color: rgb(255, 255, 255);
 }
 
-#review-date {
+.review-date {
   padding-left: 1em;
   font-weight: bold;
   color: #C2C2C2;

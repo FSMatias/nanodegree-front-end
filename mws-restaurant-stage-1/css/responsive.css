@@ -2,13 +2,13 @@
 /* CSS Document */
 
 @media screen and (min-width: 600px) and (max-width: 799px) {
-    #reviewer-name {
+    .reviewer-name {
         display: inline-block;
         width: 40%;
         padding-right: 0px;
         margin-right: 0px;
     }
-    #review-date {
+    .review-date {
         float: right;
         width: 45%;
         text-align: right;
@@ -63,13 +63,13 @@
         position: absolute;
         width: 100%;
     }
-    #reviewer-name {
+    .reviewer-name {
         display: inline-block;
         width: 40%;
         padding-right: 0px;
         margin-right: 0px;
     }
-    #review-date {
+    .review-date {
         float: right;
         width: 45%;
         text-align: right;
