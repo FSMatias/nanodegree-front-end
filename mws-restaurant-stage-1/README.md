@@ -24,7 +24,7 @@ This repository uses [leafletjs](https://leafletjs.com/) with [Mapbox](https://w
 1. Before running, you need to generate the responsive images:
     1. Run ``npm install`` cmd
     2. Install GraphicsMagick and add it to PATH env. variable
-    3. Run ``grunt`` cmd to generate images under  the img-responsive folder
+    3. Run ``grunt`` cmd to generate images under the img-responsive folder
 
 2. Start the HTTP server:
     1. In this folder, start up a simple HTTP server to serve up the site files on your local computer. 
