@@ -179,21 +179,31 @@ createRestaurantHTML = (restaurant) => {
   li.append(picture);
 
   const name = document.createElement('h1');
+  const nameId = restaurant.id + 'restaurant_header'; 
+  name.id = nameId;
   name.innerHTML = restaurant.name;
   li.append(name);
 
   const neighborhood = document.createElement('p');
+  const neighborhoodId = restaurant.id + 'restaurant_neighborhood'; 
+  neighborhood.id = neighborhoodId;
   neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
 
   const address = document.createElement('p');
+  const addressId = restaurant.id + 'restaurant_address'; 
+  address.id = addressId;
   address.innerHTML = restaurant.address;
   li.append(address);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  li.append(more);
+
+  li.id = restaurant.name;
+  li.setAttribute('role', 'listitem');
+  li.setAttribute('aria-labelledby', `${nameId} ${neighborhoodId} ${addressId}`);
 
   return li
 }
@@ -206,7 +216,6 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
     marker.on("click", onClick);
-
     function onClick() {
       window.location.href = marker.options.url;
     }
