@@ -50,3 +50,6 @@ To create resposive images you can use [grunt-responsive-images](https://www.npm
   <img src="img_original.jpg" alt="Flowers" style="width:auto;">
 </picture>
 ```
+
+### ARIA practices:
+1. [Breadcrumb](https://www.w3.org/TR/waI-aria-practices/examples/breadcrumb/index.html)
