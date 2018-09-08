@@ -53,3 +53,5 @@ To create resposive images you can use [grunt-responsive-images](https://www.npm
 
 ### ARIA practices:
 1. [Breadcrumb](https://www.w3.org/TR/waI-aria-practices/examples/breadcrumb/index.html)
+
+2. [Tabindex](https://developers.google.com/web/fundamentals/accessibility/focus/using-tabindex)
