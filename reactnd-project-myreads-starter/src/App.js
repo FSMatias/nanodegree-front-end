@@ -10,21 +10,22 @@ class BooksApp extends React.Component {
     books:[]
   }
 
-  // TODO: review code! Is there a better way to setState?
-  updateBookshelf = (book, shelf) => {
-    let updatedBooks = this.state.books;
-    let objIndex = updatedBooks.findIndex((obj => obj.title === book.title))
-    updatedBooks[objIndex].shelf = shelf
-
-    this.setState({books: updatedBooks})
-  }
-
-  componentDidMount() {
+  updateState = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     })
   }
 
+  updateBookshelf = (book, shelf) => {
+   BooksAPI.update(book, shelf).then(() => {
+    this.updateState()
+   })
+  }
+
+  componentDidMount() {
+    this.updateState()
+  }
+  
   render() {
     return (
       <div className="app">
