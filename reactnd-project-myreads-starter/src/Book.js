@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { BookshelfConstants } from './Constants'
 
 class Book extends React.Component {
     
     static propTypes = {
        bookInfo: PropTypes.object.isRequired,
+       onBookshelfChange: PropTypes.func.isRequired
     }
 
     render() {
-        const { bookInfo } = this.props
+        const { bookInfo, onBookshelfChange } = this.props
         const url = 'url(' + bookInfo.imageLinks.smallThumbnail + ')'
 
         return (
@@ -16,17 +18,17 @@ class Book extends React.Component {
             <div className="book-top">
                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: url }}></div>
                 <div className="book-shelf-changer">
-                <select>
+                <select value={bookInfo.bookshelf} onChange={(event) => onBookshelfChange(bookInfo, event.target.value)}>
                     <option value="move" disabled>Move to...</option>
-                    <option value="currentlyReading">Currently Reading</option>
-                    <option value="wantToRead">Want to Read</option>
-                    <option value="read">Read</option>
-                    <option value="none">None</option>
+                    <option value="currentlyReading">{BookshelfConstants.currentReadingBookshelf.name}</option>
+                    <option value="wantToRead">{BookshelfConstants.wantToReadBookshelf.name}</option>
+                    <option value="read">{BookshelfConstants.readBookshelf.name}</option>
+                    <option value="none">{BookshelfConstants.none.name}</option>
                 </select>
                 </div>
             </div>
             <div className="book-title">{bookInfo.title}</div>
-            <div className="book-authors">{bookInfo.authors}</div>
+            <div className="book-authors">{bookInfo.authors.join(", ")}</div>
             </div>
         )
     }
