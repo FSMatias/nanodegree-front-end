@@ -18,7 +18,9 @@ class Book extends React.Component {
                 {bookInfo.imageLinks? (
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + bookInfo.imageLinks.smallThumbnail + ')' }}></div>
                 ) : (
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url()' }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url()' }}>
+                        <p className="noCoverAvailable"> NO COVER AVAILABLE </p>
+                    </div>
                 )}
                 <div className="book-shelf-changer">
                 <select value={bookInfo.shelf} onChange={(event) => onBookshelfChange(bookInfo, event.target.value)}>

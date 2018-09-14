@@ -4,7 +4,6 @@ import { Link, Route } from 'react-router-dom'
 import './App.css'
 import Bookshelf from './Bookshelf'
 import { BookshelfConstants } from './Constants'
-import serilaizeForm from 'form-serialize'
 import Book from './Book'
 
 class BooksApp extends React.Component {
@@ -30,40 +29,48 @@ class BooksApp extends React.Component {
     this.updateState()
   }
   
+  cleanSearchPage = () => {
+    this.setState({searchBooks: []})
+    this.setState({queryReturnedNoBooks: false})
+  }
+
   componentDidUpdate(){
-    // The search content is removed, if page is refreshed
+    // The search page is cleaned up when page is refreshed
     window.onpopstate  = (e) => {
-      this.setState({searchBooks: []})
-      this.setState({queryReturnedNoBooks: false})
+      this.cleanSearchPage()
     }
   }
 
-  handleFormSubit = (event) => {
+  handleKeyUp = (event) => {
     event.preventDefault()
-    const values = serilaizeForm(event.target, { hash: true })
- 
-    BooksAPI.search(values.query).then((searchBooks) => {
-      if (searchBooks) {
-        var resJson = JSON.parse(JSON.stringify(searchBooks))
-        if (resJson.hasOwnProperty('error')) {
-          this.setState({ searchBooks: [] })
-          console.log("Found no books")
-          this.setState({queryReturnedNoBooks: true})
-        } else {
-          this.setState({queryReturnedNoBooks: false})
+    const query = event.target.value
 
-          resJson.forEach(element => {
-            const bookInShelf = this.state.books.filter(book => book.id === element.id)
-            if (bookInShelf.length > 0) {
-              element["shelf"] = bookInShelf[0].shelf
-            } else {
-              element["shelf"] = BookshelfConstants.none.id
-            }
-          });
-          this.setState({ searchBooks: resJson })
-        }
-      }
-    })
+    if (query === '') {
+      this.cleanSearchPage()
+    } else {
+      BooksAPI.search(query).then((searchBooks) => {
+        if (searchBooks) {
+          var resJson = JSON.parse(JSON.stringify(searchBooks))
+          if (resJson.hasOwnProperty('error')) {
+            this.setState({ searchBooks: [] })
+            console.log("Found no books")
+            this.setState({queryReturnedNoBooks: true})
+          } else {
+            this.setState({queryReturnedNoBooks: false})
+            
+            resJson.forEach(element => {
+              const bookInShelf = this.state.books.filter(book => book.id === element.id)
+              if (bookInShelf.length > 0) {
+                element["shelf"] = bookInShelf[0].shelf
+              } else {
+                element["shelf"] = BookshelfConstants.none.id
+              }
+            });
+            this.setState({ searchBooks: resJson })
+          }
+        }       
+      })
+    }
   }
 
   onClickBackButton = (history) => {
@@ -88,7 +95,7 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <form onSubmit={this.handleFormSubit}> 
+                <form onKeyUp={this.handleKeyUp}> 
                   <input type="text" name="query" placeholder="Search by title or author"/>
                 </form>
               </div>

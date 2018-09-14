@@ -177,3 +177,10 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+.noCoverAvailable {
+  text-align: center;
+  padding: 20px 10px 0;
+  background: #eee;
+  color: gray;
+}
