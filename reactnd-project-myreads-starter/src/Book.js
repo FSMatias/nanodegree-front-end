@@ -11,12 +11,15 @@ class Book extends React.Component {
 
     render() {
         const { bookInfo, onBookshelfChange } = this.props
-        const url = 'url(' + bookInfo.imageLinks.smallThumbnail + ')'
-
+        
         return (
             <div className="book">
             <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: url }}></div>
+                {bookInfo.imageLinks? (
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + bookInfo.imageLinks.smallThumbnail + ')' }}></div>
+                ) : (
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url()' }}></div>
+                )}
                 <div className="book-shelf-changer">
                 <select value={bookInfo.shelf} onChange={(event) => onBookshelfChange(bookInfo, event.target.value)}>
                     <option value="move" disabled>Move to...</option>
@@ -28,7 +31,9 @@ class Book extends React.Component {
                 </div>
             </div>
             <div className="book-title">{bookInfo.title}</div>
-            <div className="book-authors">{bookInfo.authors.join(", ")}</div>
+            {bookInfo.authors && (
+                <div className="book-authors">{bookInfo.authors.join(", ")}</div>
+            )}
             </div>
         )
     }

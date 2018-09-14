@@ -31,6 +31,7 @@ class BooksApp extends React.Component {
   }
   
   componentDidUpdate(){
+    // The search content is removed, if page is refreshed
     window.onpopstate  = (e) => {
       this.setState({searchBooks: []})
       this.setState({queryReturnedNoBooks: false})
