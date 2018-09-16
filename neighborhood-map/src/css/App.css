@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+.app {
+  min-height: 100%;
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app-header {
+  display: block;
+  padding: 1em;
+  background-color: #28666e;
+  color: #ffffff;
+  margin: 0;
+}
+
+.app-header-title {
+  display: inline-block;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.app-header-logo {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 1em;
+}
+
+.app-logo {
+  height: 35px;
+}
+
+.list-container {
+  background-color: #3e3d3d;
+  color: #ffffff;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em;
+}
+
+.map-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
