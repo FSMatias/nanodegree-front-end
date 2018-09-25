@@ -17,7 +17,7 @@ This project is a single-page application using React featuring a map of a neigh
 
 ## Instructions
 
-The app uses Google Maps API. Before running you will need to replace `<your GOOGLE API key>` with an API key from [Google developers page](https://console.developers.google.com).
+The app uses Google Maps API. Before running you will need to replace `<your GOOGLE API key>` with a [ Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key).
 
 1. Run ``npm install`` cmd to install dependencies
 2. Run ``npm start`` to build and run the the applcaiiton

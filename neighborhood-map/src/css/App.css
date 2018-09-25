@@ -8,6 +8,7 @@
   margin-right: auto;
 }
 
+/* App header */
 .app-header {
   display: block;
   padding: 1em;
@@ -32,6 +33,7 @@
   height: 35px;
 }
 
+/* List container */
 .list-container {
   background-color: #3e3d3d;
   color: #ffffff;
@@ -41,6 +43,11 @@
   padding: 1em;
 }
 
+.places-grid {
+  list-style-type: none;
+}
+
+/* Map oontainer */
 .map-container {
   display: block;
   margin-left: auto;
