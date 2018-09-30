@@ -43,6 +43,20 @@
   padding: 1em;
 }
 
+.search-places-input-wrapper {
+  width: 90%;
+}
+
+.search-input-text {
+  width: 100%;
+  border: 1px solid #d8d4d4;
+  height: 2em;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
 .places-grid {
   list-style-type: none;
 }

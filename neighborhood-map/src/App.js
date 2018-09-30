@@ -8,7 +8,7 @@ var inactiveMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 var activeMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
 // Static data
-var places = [{
+var originalPlaces = [{
     id: 1,
     name: 'Palaphita',
     position: {
@@ -57,7 +57,7 @@ var places = [{
 
 class App extends Component {
   state = {
-    places: places
+    places: originalPlaces
   }
 
   onMarkerClick = (marker) => {
@@ -90,6 +90,30 @@ class App extends Component {
     }
   }
 
+  handleKeyUp = (event) => {
+    event.preventDefault()
+    const query = event.target.value
+
+    let filteredPlaces
+    if (query === '') {
+      filteredPlaces = originalPlaces
+    } else {
+      filteredPlaces = originalPlaces.filter(place => place.name.toLowerCase().includes(query.toLowerCase()))
+    }
+
+    this.setState({
+      places: this.resetMarkerState(filteredPlaces)
+    })
+  }
+
+  resetMarkerState = (places) => {
+    places.forEach(function (place) {
+      place.isActive = false
+    });
+
+    return places
+  }
+
   render() {
     return (
       <div className="app">
@@ -100,6 +124,11 @@ class App extends Component {
           <h1 className="app-header-title">Neighborhood Map</h1>
         </header>
         <section className='list-container'>
+          <div className="search-places-input-wrapper">
+            <form onKeyUp={this.handleKeyUp}>
+              <input className="search-input-text" type="text" name="query" placeholder="Search by place name"/>
+            </form>
+          </div>
           <ListView 
             places={this.state.places}
             onListItemClick = {this.updateMarkerState}
@@ -135,6 +164,6 @@ class App extends Component {
   }
 }
 
-export default GoogleApiWrapper({
+export default GoogleApiWrapper({  
   apiKey: 'API-KEY'
 })(App);
