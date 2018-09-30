@@ -7,6 +7,7 @@ class ListView extends React.Component {
     
     static propTypes = {
         places: PropTypes.array.isRequired,
+        onListItemClick: PropTypes.func.isRequired
      }
 
     render() {
@@ -15,7 +16,7 @@ class ListView extends React.Component {
                 <ol className="places-grid">
                     {this.props.places.map((place) => (
                         <li key={place.id}>
-                            <p>{place.name}</p>
+                            <p className={"place-" + (place.isActive? 'active': 'inactive')} onClick={() => this.props.onListItemClick(place.name)}>{place.name}</p>
                         </li>
                     ))}
                 </ol>
