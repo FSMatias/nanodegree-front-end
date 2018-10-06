@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 import './css/App.css';
 import './css/App-responsive.css';
 import ListView from './ListView';
@@ -10,7 +10,7 @@ var activeMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 // Static data
 var originalPlaces = [{
     id: 1,
-    name: 'Palaphita',
+    title: 'Palaphita',
     position: {
       lat: -22.9770927,
       lng: -43.2000606
@@ -19,7 +19,7 @@ var originalPlaces = [{
   },
   {
     id: 2,
-    name: 'Zuka',
+    title: 'Zuka',
     position: {
       lat: -22.9831935,
       lng: -43.2302561
@@ -28,7 +28,7 @@ var originalPlaces = [{
   },
   {
     id: 3,
-    name: 'Sushimar',
+    title: 'Sushimar',
     position: {
       lat: -22.9741533,
       lng: -43.2278477
@@ -37,7 +37,7 @@ var originalPlaces = [{
   },
   {
     id: 4,
-    name: 'Banana Jack',
+    title: 'Banana Jack',
     position: {
       lat: -22.9848573,
       lng: -43.19824
@@ -46,7 +46,7 @@ var originalPlaces = [{
   },
   {
     id: 5,
-    name: 'Outback Steakhouse',
+    title: 'Outback Steakhouse',
     position: {
       lat: -22.9826983,
       lng: -43.2168294
@@ -55,30 +55,50 @@ var originalPlaces = [{
   }
 ];
 
+var emptyMarker = {
+  title: '',
+  position: {
+    lat: null,
+    lng: null
+  },
+}
+
 class App extends Component {
   state = {
-    places: originalPlaces
+    places: originalPlaces,
+    activeMarker: emptyMarker,
+    showingInfoWindow: false
   }
 
   onMarkerClick = (marker) => {
+    const markerTitle = marker.title
     console.log(`Marker '${marker.title}' was clicked`)
-    this.updateMarkerState(marker.title)
+    
+    this.updateMarkerState(markerTitle)
+    
+    this.setState({
+      activeMarker: marker,
+      showingInfoWindow: true
+    })
   }
 
   updateMarkerState = (markerTitle) => {
-    console.log(markerTitle)
+    let marker = emptyMarker;
     let placesUpdated = this.state.places
-    console.log(placesUpdated)
     placesUpdated.forEach(function (place) {
-      if (place.name === markerTitle) {
+      if (place.title === markerTitle) {
         place.isActive = true
+        marker.position = place.position
+        marker.title = place.title
       } else {
         place.isActive = false
       }
     });
 
     this.setState({
-      places: placesUpdated
+      places: placesUpdated,
+      activeMarker: marker,
+      showingInfoWindow: true
     })
   }
 
@@ -98,11 +118,13 @@ class App extends Component {
     if (query === '') {
       filteredPlaces = originalPlaces
     } else {
-      filteredPlaces = originalPlaces.filter(place => place.name.toLowerCase().includes(query.toLowerCase()))
+      filteredPlaces = originalPlaces.filter(place => place.title.toLowerCase().includes(query.toLowerCase()))
     }
 
     this.setState({
-      places: this.resetMarkerState(filteredPlaces)
+      places: this.resetMarkerState(filteredPlaces),
+      activeMarker: emptyMarker,
+      showingInfoWindow: false
     })
   }
 
@@ -117,12 +139,14 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+        
         <header className="app-header">
           <div className="app-header-logo">
             <img src={require('./icons/map.png')} className="app-logo" alt="logo" />
           </div> 
           <h1 className="app-header-title">Neighborhood Map</h1>
         </header>
+        
         <section className='list-container'>
           <div className="search-places-input-wrapper">
             <form onKeyUp={this.handleKeyUp}>
@@ -134,29 +158,44 @@ class App extends Component {
             onListItemClick = {this.updateMarkerState}
           />
         </section>
+
         <section className='map-container'>
           <Map 
-            google={ this.props.google } 
+            google={this.props.google} 
             initialCenter={{
               lat: -22.9826983,
               lng: -43.2168294
             }}
-            zoom={ 14 }
+            zoom={14}
           >
-          {/* Add Markers to all places listed under state.places */}
-          {this.state.places.map((place) => (
-            <Marker key={ place.id }
-              title={ place.name }
-              position={
-                {
-                  lat: place.position.lat, 
-                  lng: place.position.lng
-                }
-              } 
-              icon={ this.getMarkerIcon(place.isActive) }
-              onClick = { this.onMarkerClick }
-            />
-          ))}
+          
+            {/* Add Markers to all places listed under state.places */}
+            {this.state.places.map((place) => (
+              <Marker key={place.id}
+                title={place.title}
+                position={
+                  {
+                    lat: place.position.lat, 
+                    lng: place.position.lng
+                  }
+                } 
+                icon={this.getMarkerIcon(place.isActive)}
+                onClick = {this.onMarkerClick}
+              />
+            ))}
+
+            {/* Show InfoWindow on the Active marker */}
+              <InfoWindow
+                visible={this.state.showingInfoWindow}
+                position={{
+                  lat: this.state.activeMarker.position.lat,
+                  lng: this.state.activeMarker.position.lng
+                }}
+                pixelOffset={new this.props.google.maps.Size(0, -30)}>
+                <div>
+                  <p> {this.state.activeMarker.title} </p>
+                </div>
+              </InfoWindow>              
           </Map>   
         </section>
       </div>

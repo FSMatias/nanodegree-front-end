@@ -15,8 +15,8 @@ class ListView extends React.Component {
             <div>
                 <ol className="places-grid">
                     {this.props.places.map((place) => (
-                        <li key={place.id}>
-                            <p className={"place-" + (place.isActive? 'active': 'inactive')} onClick={() => this.props.onListItemClick(place.name)}>{place.name}</p>
+                        <li className="place-li" key={place.id}>
+                            <p className={"place-" + (place.isActive? 'active': 'inactive')} onClick={() => this.props.onListItemClick(place.title)}>{place.title}</p>
                         </li>
                     ))}
                 </ol>
