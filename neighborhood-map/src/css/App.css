@@ -76,3 +76,32 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Info window */
+
+.info-window-header {
+  width: 100%;
+  color: #3e3d3d;
+}
+
+.info-window-header :after
+{
+    content:' ';
+    display:block;
+    border:1px solid #28666e;
+}
+
+.gm-style-iw {
+  top: 0px !important;
+  left: 10px !important;
+}
+
+#loading-rotate {
+  animation: rotate360 1s infinite linear;
+}
+
+@keyframes rotate360 {
+  100% {
+      transform: rotate(360deg);
+  }
+}
