@@ -245,10 +245,13 @@ class App extends Component {
                     )}
                     
                     {(Object.keys(this.state.activeMarkerYelpInfo).length > 0) && !this.state.waitingYelpToRespond && (
+                      <div>
                         <div>
-                          <p> Rating: {this.state.activeMarkerYelpInfo.rating} </p>
-                          <img src={this.state.activeMarkerYelpInfo.image_url} alt={this.state.activeMarkerYelpInfo.name} height="110" width="110"/>
-                        </div>                      
+                          <p className="infowindow-content-rating"> Rating: {this.state.activeMarkerYelpInfo.rating} </p>
+                          <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        </div>
+                        <img className="infowindow-content-image" src={this.state.activeMarkerYelpInfo.image_url} alt={this.state.activeMarkerYelpInfo.name} height="110" width="110"/>
+                      </div>                      
                     )}
                     
                     {(Object.keys(this.state.activeMarkerYelpInfo).length <= 0) && !this.state.waitingYelpToRespond && (
@@ -267,6 +270,6 @@ class App extends Component {
   }
 }
 
-export default GoogleApiWrapper({   
+export default GoogleApiWrapper({ 
   apiKey: '<your GOOGLE API key>'
 })(App);
