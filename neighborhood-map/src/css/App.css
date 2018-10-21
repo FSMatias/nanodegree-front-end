@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+h2 {
+  font-size: 20px;
+}
+
 .app {
   min-height: 100%;
   width: 100%;
@@ -43,8 +47,23 @@
   padding: 1em;
 }
 
+.list-container-fixed-content {
+  display: block;
+}
+
 .search-places-input-wrapper {
-  width: 90%;
+  display: inline-block;
+  width: 75%;
+  padding-bottom: 5px;
+}
+
+.hamburguer-nav {
+  display: inline-block;
+  padding: 0.5em 1em;
+}
+
+.hamburguer-icon {
+  color: #ffffff;
 }
 
 .search-input-text {
@@ -68,6 +87,16 @@
 
 .place-li :hover {
   cursor: pointer;
+}
+
+.list-view {
+  overflow: hidden;
+  display: block;
+}
+
+.list-view-hidden {
+  overflow: hidden;
+  display: none;
 }
 
 /* Map container */

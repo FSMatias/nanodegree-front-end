@@ -8,6 +8,9 @@ import ListView from './ListView';
 var inactiveMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 var activeMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
+var listViewHidden = 'list-view-hidden';
+var listViewShowing = 'list-view';
+
 // Static data
 var originalPlaces = [{
     id: 1,
@@ -76,7 +79,8 @@ class App extends Component {
     activeMarker: emptyMarker,
     activeMarkerYelpInfo: {},
     waitingYelpToRespond: false,
-    showingInfoWindow: false
+    showingInfoWindow: false,
+    listViewStatus: listViewHidden
   }
 
   onMarkerClick = (marker) => {
@@ -129,7 +133,7 @@ class App extends Component {
     });
 
     this.getYelpBusinessInfo(marker.yelpBusinessId)
-  
+
     this.setState({
       places: placesUpdated,
       activeMarker: marker,
@@ -172,6 +176,17 @@ class App extends Component {
     return places
   }
 
+  showHideListView = () => {
+    let status = listViewHidden;
+    if(this.state.listViewStatus === listViewHidden) {
+      status = listViewShowing
+    } 
+
+    this.setState({
+      listViewStatus: status
+    })
+  }
+
   render() {
     return (
       <div className="app">
@@ -184,15 +199,22 @@ class App extends Component {
         </header>
         
         <section className='list-container'>
-          <div className="search-places-input-wrapper">
-            <form onKeyUp={this.handleKeyUp}>
-              <input className="search-input-text" type="text" name="query" placeholder="Search by place name"/>
-            </form>
+          <div className="list-container-fixed-content">
+            <div className="search-places-input-wrapper">
+              <form onKeyUp={this.handleKeyUp}>
+                <input aria-label="Search by place name" className="search-input-text" type="text" name="query" placeholder="Search by place name"/>
+              </form>
+            </div>
+            <div className="hamburguer-nav">
+              <a className="glyphicon glyphicon-menu-hamburger hamburguer-icon" onClick={this.showHideListView}> </a>
+            </div>
           </div>
-          <ListView 
-            places={this.state.places}
-            onListItemClick = {this.updateMarkerState}
-          />
+          <div className={this.state.listViewStatus}>
+            <ListView 
+              places={this.state.places}
+              onListItemClick = {this.updateMarkerState}
+            />  
+          </div>
         </section>
 
         <section className='map-container'>
@@ -230,7 +252,7 @@ class App extends Component {
                 pixelOffset={new this.props.google.maps.Size(0, -30)}>
                 <div className="info-window">
                   <div className="info-window-header">
-                    <h3 className="info-window-title"> {this.state.activeMarker.title} </h3>
+                    <h2 className="info-window-title"> {this.state.activeMarker.title} </h2>
                   </div>
                   <div className="info-window-content">
                     {/* Info window content cointain:
