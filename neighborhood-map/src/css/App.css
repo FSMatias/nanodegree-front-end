@@ -74,6 +74,7 @@ h2 {
   box-sizing: border-box;
   padding-left: 1em;
   padding-right: 1em;
+  color: black;
 }
 
 .places-grid {
