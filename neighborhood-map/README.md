@@ -29,3 +29,14 @@ After replacing all API keys, you can use the following cmds:
 
 1. Run ``npm install`` cmd to install dependencies
 2. Run ``npm start`` to build and run the the applcaiiton
+
+## Service Worker
+
+When creating the react app using [create-react-app](https://github.com/facebookincubator/create-react-app), a service worker is already built in. You can find the registration of the service worker under registerServiceWorker.js file. The register() function helps to register the service worker to the React app only if its in a production mode and if the browser supports Service workers. To test it, you should prepare the React app for production. Run ``npm run build`` command. This command builds the app for production to the build folder and correctly bundles React in production mode and optimizes the build for the best performance. It also registers the service worker. 
+
+To serve the app, you need to: 
+1. install serve: ``npm i serve -g``
+2. run command ``serve -s build``. The app should be running at http://localhost:5000. 
+
+
+Check more instructions on this [article](https://medium.com/front-end-hacking/build-a-realtime-pwa-with-react-99e7b0fd3270).
